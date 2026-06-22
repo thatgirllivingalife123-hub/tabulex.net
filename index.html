@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do List App</title>
+    <title>Private Image</title>
     <style>
         * {
             margin: 0;
@@ -12,452 +12,42 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            min-height: 100vh;
+            background-color: #f0f0f0;
         }
 
         .container {
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 500px;
-            padding: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 20px;
         }
 
         h1 {
             color: #333;
-            margin-bottom: 30px;
-            text-align: center;
-            font-size: 32px;
-        }
-
-        .input-container {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        #taskInput {
-            flex: 1;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        #taskInput:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        #addBtn {
-            padding: 12px 25px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        #addBtn:hover {
-            background: #5568d3;
-        }
-
-        #addBtn:active {
-            transform: scale(0.98);
-        }
-
-        .stats {
-            display: flex;
-            justify-content: space-around;
             margin-bottom: 20px;
-            padding: 15px;
-            background: #f5f5f5;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .stat {
-            flex: 1;
-        }
-
-        .stat-number {
-            font-size: 24px;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: #999;
-            margin-top: 5px;
-        }
-
-        #taskList {
-            list-style: none;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .task-item {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            background: #f9f9f9;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            transition: all 0.3s;
-            border-left: 4px solid #667eea;
-        }
-
-        .task-item:hover {
-            background: #f0f0f0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .task-item.completed {
-            opacity: 0.6;
-            border-left-color: #4caf50;
-        }
-
-        .task-item.completed .task-text {
-            text-decoration: line-through;
-            color: #999;
-        }
-
-        .task-checkbox {
-            width: 20px;
-            height: 20px;
-            margin-right: 15px;
-            cursor: pointer;
-            accent-color: #667eea;
-        }
-
-        .task-text {
-            flex: 1;
-            color: #333;
-            word-break: break-word;
-        }
-
-        .task-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .delete-btn {
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background 0.3s;
-        }
-
-        .delete-btn:hover {
-            background: #ff5252;
-        }
-
-        .edit-btn {
-            background: #ffa500;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background 0.3s;
-        }
-
-        .edit-btn:hover {
-            background: #ff8c00;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: #999;
-        }
-
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-
-        .clear-all-btn {
-            width: 100%;
-            padding: 12px;
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background 0.3s;
-        }
-
-        .clear-all-btn:hover {
-            background: #ff5252;
-        }
-
-        .clear-all-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e0e0e0;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            transition: width 0.3s;
-            border-radius: 10px;
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-
-            .input-container {
-                flex-direction: column;
-            }
-
-            #addBtn {
-                width: 100%;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📝 My To-Do List</h1>
-
-        <div class="input-container">
-            <input 
-                type="text" 
-                id="taskInput" 
-                placeholder="Add a new task..." 
-                autocomplete="off"
-            >
-            <button id="addBtn">Add</button>
-        </div>
-
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressFill"></div>
-        </div>
-
-        <div class="stats">
-            <div class="stat">
-                <div class="stat-number" id="totalTasks">0</div>
-                <div class="stat-label">Total</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number" id="completedTasks">0</div>
-                <div class="stat-label">Completed</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number" id="pendingTasks">0</div>
-                <div class="stat-label">Pending</div>
-            </div>
-        </div>
-
-        <ul id="taskList"></ul>
-
-        <div class="empty-state" id="emptyState">
-            <div class="empty-state-icon">✨</div>
-            <p>No tasks yet. Add one to get started!</p>
-        </div>
-
-        <button class="clear-all-btn" id="clearAllBtn" disabled>Clear All Completed</button>
+        <h1>Private Image</h1>
+        <img src="YOUR_IMAGE_URL_HERE" alt="Private image">
+        <p style="margin-top: 20px; color: #666;">This link is only for you</p>
     </div>
-
-    <script>
-        // DOM Elements
-        const taskInput = document.getElementById('taskInput');
-        const addBtn = document.getElementById('addBtn');
-        const taskList = document.getElementById('taskList');
-        const emptyState = document.getElementById('emptyState');
-        const clearAllBtn = document.getElementById('clearAllBtn');
-        const totalTasksEl = document.getElementById('totalTasks');
-        const completedTasksEl = document.getElementById('completedTasks');
-        const pendingTasksEl = document.getElementById('pendingTasks');
-        const progressFill = document.getElementById('progressFill');
-
-        // Load tasks from localStorage
-        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-
-        // Initialize app
-        function init() {
-            renderTasks();
-            updateStats();
-            taskInput.focus();
-        }
-
-        // Add task
-        function addTask() {
-            const taskText = taskInput.value.trim();
-            
-            if (taskText === '') {
-                alert('Please enter a task!');
-                return;
-            }
-
-            const task = {
-                id: Date.now(),
-                text: taskText,
-                completed: false,
-                createdAt: new Date().toLocaleDateString()
-            };
-
-            tasks.unshift(task);
-            saveTasks();
-            renderTasks();
-            updateStats();
-            taskInput.value = '';
-            taskInput.focus();
-        }
-
-        // Delete task
-        function deleteTask(id) {
-            tasks = tasks.filter(task => task.id !== id);
-            saveTasks();
-            renderTasks();
-            updateStats();
-        }
-
-        // Toggle task completion
-        function toggleTask(id) {
-            const task = tasks.find(t => t.id === id);
-            if (task) {
-                task.completed = !task.completed;
-                saveTasks();
-                renderTasks();
-                updateStats();
-            }
-        }
-
-        // Edit task
-        function editTask(id) {
-            const task = tasks.find(t => t.id === id);
-            if (task) {
-                const newText = prompt('Edit task:', task.text);
-                if (newText !== null && newText.trim() !== '') {
-                    task.text = newText.trim();
-                    saveTasks();
-                    renderTasks();
-                }
-            }
-        }
-
-        // Clear all completed tasks
-        function clearCompleted() {
-            if (confirm('Delete all completed tasks?')) {
-                tasks = tasks.filter(task => !task.completed);
-                saveTasks();
-                renderTasks();
-                updateStats();
-            }
-        }
-
-        // Render tasks
-        function renderTasks() {
-            taskList.innerHTML = '';
-
-            if (tasks.length === 0) {
-                emptyState.style.display = 'block';
-                return;
-            }
-
-            emptyState.style.display = 'none';
-
-            tasks.forEach(task => {
-                const li = document.createElement('li');
-                li.className = `task-item ${task.completed ? 'completed' : ''}`;
-                li.innerHTML = `
-                    <input 
-                        type="checkbox" 
-                        class="task-checkbox" 
-                        ${task.completed ? 'checked' : ''}
-                        onchange="toggleTask(${task.id})"
-                    >
-                    <span class="task-text">${escapeHtml(task.text)}</span>
-                    <div class="task-actions">
-                        <button class="edit-btn" onclick="editTask(${task.id})">Edit</button>
-                        <button class="delete-btn" onclick="deleteTask(${task.id})">Delete</button>
-                    </div>
-                `;
-                taskList.appendChild(li);
-            });
-        }
-
-        // Update statistics
-        function updateStats() {
-            const total = tasks.length;
-            const completed = tasks.filter(t => t.completed).length;
-            const pending = total - completed;
-
-            totalTasksEl.textContent = total;
-            completedTasksEl.textContent = completed;
-            pendingTasksEl.textContent = pending;
-
-            // Update progress bar
-            const percentage = total === 0 ? 0 : (completed / total) * 100;
-            progressFill.style.width = percentage + '%';
-
-            // Enable/disable clear all button
-            clearAllBtn.disabled = completed === 0;
-        }
-
-        // Save tasks to localStorage
-        function saveTasks() {
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-        }
-
-        // Escape HTML to prevent XSS
-        function escapeHtml(text) {
-            const map = {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#039;'
-            };
-            return text.replace(/[&<>"']/g, m => map[m]);
-        }
-
-        // Event listeners
-        addBtn.addEventListener('click', addTask);
-        taskInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') addTask();
-        });
-        clearAllBtn.addEventListener('click', clearCompleted);
-
-        // Initialize on load
-        init();
-    </script>
 </body>
 </html>
